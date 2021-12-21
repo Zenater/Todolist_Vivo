@@ -16,7 +16,7 @@ type TasksStateType = {
 }
 
 
-function App() {
+export const App=()=> {
     let todolistId1 = v1();
     let todolistId2 = v1();
 
@@ -87,6 +87,15 @@ function App() {
         setTasks({...tasks, [newID]: []})
     }
 
+    const updateTask = (id: string, todolistId: string, title: string) => {
+        setTasks({
+            ...tasks, [todolistId]: tasks[todolistId].map(m => m.id === id ? {...m, title: title} : m)
+        })
+    }
+    const updateTodolists = (todolistId: string, title: string) => {
+      setTodolists(todolists.map(m=>m.id===todolistId ? {...m, title:title} : m))
+    }
+
 
     return (
         <div className="App">
@@ -103,18 +112,21 @@ function App() {
                         tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
                     }
 
-                    return <Todolist
-                        key={tl.id}
-                        id={tl.id}
-                        title={tl.title}
-                        tasks={tasksForTodolist}
-                        removeTask={removeTask}
-                        changeFilter={changeFilter}
-                        addTask={addTask}
-                        changeTaskStatus={changeStatus}
-                        filter={tl.filter}
-                        removeTodolist={removeTodolist}
-                    />
+                    return (
+                        <Todolist
+                            key={tl.id}
+                            id={tl.id}
+                            title={tl.title}
+                            tasks={tasksForTodolist}
+                            removeTask={removeTask}
+                            changeFilter={changeFilter}
+                            addTask={addTask}
+                            changeTaskStatus={changeStatus}
+                            filter={tl.filter}
+                            removeTodolist={removeTodolist}
+                            updateTask={updateTask}
+                            updateTodolists={updateTodolists}
+                        />)
                 })
             }
 
@@ -122,4 +134,4 @@ function App() {
     );
 }
 
-export default App;
+
