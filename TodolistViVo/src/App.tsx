@@ -2,14 +2,7 @@ import React, {useReducer, useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
-import {
-    addTaskAC,
-    changeStatusAC,
-    removeTaskAC,
-    deleteTaskAC,
-    TasksReducer,
-    callbackHandlerAC
-} from "./reducers/TasksReducer";
+import {addTaskAC, changeStatusAC, removeTaskAC, deleteTaskAC, TasksReducer, callbackHandlerAC} from "./reducers/TasksReducer";
 import {addNewTodoAC, changeFilterAC, removeTodolistAC, TodoReducer} from "./reducers/TodoReducer";
 import {AddItemForm} from "./AddItemForm";
 
