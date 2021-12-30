@@ -1,11 +1,19 @@
 import React, {useState} from 'react';
+import {useSelector} from "react-redux";
+import {rootReducerType} from "../store/store";
+import {FilterValuesType} from "../App";
+import {TaskType} from "../Todolist";
 
 type propsSpan = {
     title: string
-    callBack: (title: string) => void
+    callBack: (todolistId: string,title:string) => void
 }
 
 export const EditableSpan = (props: propsSpan) => {
+    let todo = useSelector<rootReducerType, Array<TaskType>>(state => state.todo)
+
+
+
     const [edit, setEdit] = useState(false)
     let [newtitle, setNewTitle] = useState(props.title)
 
@@ -16,7 +24,7 @@ export const EditableSpan = (props: propsSpan) => {
 
     const editFalse = () => {
         setEdit(false)
-        props.callBack(newtitle)
+        props.callBack(props.title,newtitle)
     }
 
     const onchangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {

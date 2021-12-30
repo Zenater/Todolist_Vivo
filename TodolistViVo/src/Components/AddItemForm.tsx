@@ -1,20 +1,24 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import {AddBox} from '@material-ui/icons';
-import {TextField} from '@material-ui/core';
+import {useDispatch, useSelector} from "react-redux";
+import {rootReducerType} from "../store/store";
+import {TaskType} from "../Todolist";
 
-type AddItemFormPropsType = {
-    addItem: (title: string) => void
+type PropsInput = {
+    callback: (title:string)=>void
+
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
-
+export const AddItemForm = (props:PropsInput) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
-    const addItem = () => {
-        if (title.trim() !== "") {
-            props.addItem(title);
+    let dispatch = useDispatch();
+    let tasksState= useSelector <rootReducerType,Array<TaskType>>(state => state.tasks )
+
+    const addTask = () => {
+        let newTitle = title.trim();
+        if (newTitle !== "") {
+            props.callback(newTitle);
             setTitle("");
         } else {
             setError("Title is required");
@@ -28,23 +32,21 @@ export function AddItemForm(props: AddItemFormPropsType) {
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.charCode === 13) {
-            addItem();
+            addTask();
         }
     }
+    return (
+        <div>
+            <div>
+                <input value={title}
+                       onChange={onChangeHandler}
+                       onKeyPress={onKeyPressHandler}
+                       // className={error ? "error" : ""}
+                />
+                <button onClick={addTask}>+</button>
+                {error && <div className="error-message">{error}</div>}
+            </div>
+        </div>
+    );
+};
 
-    return <div>
-        <TextField value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   variant={'outlined'}
-                   size={'small'}
-                   label={'Title'}
-                   error={!!error}
-                   helperText={error && 'title mistake'}
-        />
-        <IconButton onClick={addItem} style={{maxWidth: '40px',maxHeight: '40px',minWidth:'40px'}}>
-            <AddBox/>
-        </IconButton>
-
-    </div>
-}

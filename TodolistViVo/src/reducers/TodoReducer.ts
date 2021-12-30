@@ -1,9 +1,17 @@
-import React from 'react';
-import {TaskType} from "../Todolist";
+
 import {v1} from "uuid";
 import {FilterValuesType, TasksStateType, TodolistType} from "../App";
 
-export const TodoReducer = (state: Array<TodolistType>, action: tsarType) => {
+let todolistId1 = v1();
+let todolistId2 = v1();
+
+let initialState:Array<TodolistType>=([
+    {id: todolistId1, title: "What to learn", filter: "all"},
+    {id: todolistId2, title: "What to buy", filter: "all"}
+])
+
+
+export const TodoReducer = (state=initialState, action: tsarType) => {
     switch (action.type) {
         case "CHANGE-FILTER-TITLE": {
             let newState = [...state];
@@ -20,12 +28,16 @@ return [...state,{id: newID, title: action.payload.newTodolistTitle, filter: "al
             let newState = [...state];
 return newState.map(m=>m.id===action.payload.todolistId2? {...m, filter: action.payload.filter} : m)
         }
+        case "UPDATE-TODO": {
+            let newState = [...state];
+            return newState.map(m=>m.id===action.payload.todolistId ? {...m, title:action.payload.title} : m)
+        }
         default:
             return state
     }
 };
 
-type tsarType = changeTodoFilter |changeFilterACType|removeTodolistACType|addNewTodoACType
+type tsarType = changeTodoFilter |changeFilterACType|removeTodolistACType|addNewTodoACType|updateTodolists
 
 
 type changeFilterACType = ReturnType<typeof changeFilterAC>
@@ -66,6 +78,16 @@ export const changeTodoFilterAC = (todolistId2: string,filter:FilterValuesType) 
         payload: {
             todolistId2,
             filter
+        }
+    }as const
+}
+type updateTodolists = ReturnType<typeof updateTodolistsAC>
+export const updateTodolistsAC = (todolistId: string, title: string) => {
+    return {
+        type: 'UPDATE-TODO',
+        payload: {
+            todolistId,
+            title
         }
     }as const
 }
