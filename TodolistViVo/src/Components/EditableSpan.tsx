@@ -1,43 +1,28 @@
-import React, {useState} from 'react';
-import {useSelector} from "react-redux";
-import {rootReducerType} from "../store/store";
-import {FilterValuesType} from "../App";
-import {TaskType} from "../Todolist";
+import React, {ChangeEvent, useState} from 'react';
+import { TextField } from '@material-ui/core';
 
-type propsSpan = {
-    title: string
-    callBack: (todolistId: string,title:string) => void
+type EditableSpanPropsType = {
+    value: string
+    onChange: (newValue: string) => void
 }
 
-export const EditableSpan = (props: propsSpan) => {
-    let todo = useSelector<rootReducerType, Array<TaskType>>(state => state.todo)
+export function EditableSpan(props: EditableSpanPropsType) {
+    let [editMode, setEditMode] = useState(false);
+    let [title, setTitle] = useState(props.value);
 
-
-
-    const [edit, setEdit] = useState(false)
-    let [newtitle, setNewTitle] = useState(props.title)
-
-
-    const editTrue = () => {
-        setEdit(true)
+    const activateEditMode = () => {
+        setEditMode(true);
+        setTitle(props.value);
+    }
+    const activateViewMode = () => {
+        setEditMode(false);
+        props.onChange(title);
+    }
+    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
     }
 
-    const editFalse = () => {
-        setEdit(false)
-        props.callBack(props.title,newtitle)
-    }
-
-    const onchangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNewTitle(event.currentTarget.value)
-    }
-
-    return (
-        edit ?
-            <input value={newtitle}
-                   onBlur={editFalse}
-                   onChange={onchangeInput}
-                   autoFocus/>
-            : <span onDoubleClick={editTrue}>{props.title}</span>
-    );
+    return editMode
+        ? <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
+        : <span   style={{fontWeight: 'bold'}} onDoubleClick={activateEditMode}>{props.value}</span>
 }
-
