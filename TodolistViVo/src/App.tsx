@@ -152,7 +152,7 @@ function App() {
                                 tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
                             }
 
-                            return <Grid item>
+                            return <Grid item key={tl.id} >
                                 <Paper style={{padding: "10px"}}>
                                     <Todolist
                                         key={tl.id}
