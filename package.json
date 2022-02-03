@@ -1,0 +1,11 @@
+{
+  "name": "Todolist_Vivo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Zenater/Todolist_Vivo.git",
+  "author": "Zenater <zent230096@mail.ru>",
+  "license": "MIT",
+  "dependencies": {
+    "@storybook/react": "^6.4.18"
+  }
+}
