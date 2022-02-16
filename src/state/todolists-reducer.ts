@@ -45,8 +45,6 @@ export const todolistsReducer = (state: Array<TodolistDomainType> = initialState
                 return {...tl, filter: 'all'}
             })
             return a
-
-
         case 'REMOVE-TODOLIST': {
             return state.filter(tl => tl.id !== action.id)
         }
@@ -100,10 +98,12 @@ export type SetTodosType = ReturnType<typeof setTodosAC>
 
 
 
-export const setTodosTC=(dispatch: Dispatch):void=> {
+export const fetchTodosTC =() => (dispatch: Dispatch)=> {
     todolistsAPI.getTodolists().
     then((res)=> {
         let todos=res.data
         dispatch(setTodosAC(todos))
     })
+
 }
+
