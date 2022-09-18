@@ -31,51 +31,41 @@ export const TodolistsList= () => {
         } else {
             navigate('login')
         }
-    }, [isLoggedIn])
+    }, [isLoggedIn,dispatch,navigate])
 
     const removeTask = useCallback(function (id: string, todolistId: string) {
-        const thunk = removeTaskTC(id, todolistId)
-        dispatch(thunk)
-    }, [])
-
-    const addTask = useCallback(function (title: string, todolistId: string) {
-        const thunk = addTaskTC(title, todolistId)
-        dispatch(thunk)
-    }, [])
-
-    const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
-        const thunk = updateTaskTC(id, {status}, todolistId)
-        dispatch(thunk)
-    }, [])
-
-    const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
-        const thunk = updateTaskTC(id, {title: newTitle}, todolistId)
-        dispatch(thunk)
-    }, [])
-
-    const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
-        const action = changeTodolistFilterAC(todolistId, value)
-        dispatch(action)
-    }, [])
-
-    const removeTodolist = useCallback(function (id: string) {
-        const thunk = removeTodolistTC(id)
-        dispatch(thunk)
-    }, [])
-
-    const changeTodolistTitle = useCallback(function (id: string, title: string) {
-        const thunk = changeTodolistTitleTC(id, title)
-        dispatch(thunk)
-    }, [])
-
-    const addTodolist = useCallback((title: string) => {
-        const thunk = addTodolistTC(title)
-        dispatch(thunk)
+        dispatch(removeTaskTC(id, todolistId))
     }, [dispatch])
 
-    // if(!isLoggedIn) {
-    //     return <Navigate to={'login'}/>
-    // }
+    const addTask = useCallback(function (title: string, todolistId: string) {
+        dispatch(addTaskTC(title, todolistId))
+    }, [dispatch])
+
+    const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
+        dispatch(updateTaskTC(id, {status}, todolistId))
+    }, [dispatch])
+
+    const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
+        dispatch(updateTaskTC(id, {title: newTitle}, todolistId))
+    }, [dispatch])
+
+    const changeFilter = useCallback(function (filter: FilterValuesType, todolistId: string) {
+        dispatch(changeTodolistFilterAC({id:todolistId, filter}))
+    }, [dispatch])
+
+    const removeTodolist = useCallback(function (id: string) {
+        dispatch(removeTodolistTC(id))
+    }, [dispatch])
+
+    const changeTodolistTitle = useCallback(function (id: string, title: string) {
+        dispatch(changeTodolistTitleTC(id, title))
+    }, [dispatch])
+
+    const addTodolist = useCallback((title: string) => {
+        dispatch(addTodolistTC(title))
+    }, [dispatch])
+
+
 
     return <>
         <Grid container style={{padding: '20px'}}>

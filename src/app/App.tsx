@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
-import {Login} from "../components/Login";
+import {Login} from "../features/Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {CircularProgress} from "@mui/material";
 import {logoutTC} from "../features/Login/auth-reducer";
@@ -46,9 +46,9 @@ function App() {
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <Menu/>
                     </IconButton>
-                    <Typography variant="h6">
-                        News
-                    </Typography>
+                    {/*<Typography variant="h6">*/}
+                    {/*    News*/}
+                    {/*</Typography>*/}
                     {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Logout</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}

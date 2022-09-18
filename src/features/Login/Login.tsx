@@ -9,20 +9,11 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "../features/Login/auth-reducer";
-import {AppRootStateType} from "../app/store";
+import {loginTC} from "./auth-reducer";
+import {AppRootStateType} from "../../app/store";
 import {Navigate} from "react-router-dom";
-import {LoginParamsType} from "../api/todolists-api";
+import {LoginParamsType} from "../../api/todolists-api";
 
-// type FormikErrorType = {
-//     email?: string
-//     password?: string
-//     rememberMe?: boolean
-// }
-
-// Partial делае все поля необязательными
-// Omit убирает одном поле, перечисление через |
-// Pick добовляет  поле, перечисление через | .  const errors: Partial<Pick<LoginParamsType, 'email'| 'password' |'rememberMe'>> = {};
 export const Login = () => {
     const dispatch=useDispatch()
     const isLoggedIn=useSelector<AppRootStateType,boolean>(state => state.auth.isLoggedIn)
@@ -33,7 +24,6 @@ export const Login = () => {
             rememberMe: false
         },
         validate: (values) => {
-            // const errors: FormikErrorType = {};
              const errors: Partial<Omit<LoginParamsType, 'captcha'>> = {};
             if (!values.email) {
                 errors.email = 'Required';
