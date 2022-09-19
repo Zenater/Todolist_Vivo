@@ -33,8 +33,8 @@ export const TodolistsList= () => {
         }
     }, [isLoggedIn,dispatch,navigate])
 
-    const removeTask = useCallback(function (id: string, todolistId: string) {
-        dispatch(removeTaskTC(id, todolistId))
+    const removeTask = useCallback(function (taskId: string, todolistId: string) {
+        dispatch(removeTaskTC({taskId, todolistId}))
     }, [dispatch])
 
     const addTask = useCallback(function (title: string, todolistId: string) {
