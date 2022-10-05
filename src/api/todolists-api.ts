@@ -68,6 +68,7 @@ export type LoginParamsType= {
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
+    fieldError: Array<{ field:string,message:string }>
     fieldsErrors: Array<string>
     data: D
 }

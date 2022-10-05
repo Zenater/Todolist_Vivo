@@ -4,7 +4,7 @@ import {combineReducers} from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import {appReducer} from './app-reducer'
 import {authReducer} from "../features/Login/auth-reducer";
-import {TypedUseSelectorHook, useSelector} from "react-redux";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {configureStore, MiddlewareArray} from "@reduxjs/toolkit";
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -21,8 +21,10 @@ export const store = configureStore({reducer:rootReducer, middleware: new Middle
 
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<typeof rootReducer>
+export type AppDispatchType = typeof store.dispatch
 // кастомный хук
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
+export const useAppDispatch=()=> useDispatch<AppDispatchType>()
 
 // а это, чтобы можно было в консоли браузера обращаться к store в любой момент
 // @ts-ignore

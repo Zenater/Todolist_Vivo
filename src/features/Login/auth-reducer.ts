@@ -12,12 +12,14 @@ export const loginTC = createAsyncThunk('auth/login', async (param: LoginParamsT
         if (res.data.resultCode === 0) {
             thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
             return {isLogin: true}
-
         } else {
             handleServerAppError(res.data, thunkAPI.dispatch)
+            return {isLogin: false}
         }
     } catch (error: any) {
         handleServerNetworkError(error, thunkAPI.dispatch)
+        return {isLogin: false}
+
     }
 
 })
@@ -28,6 +30,11 @@ const slice = createSlice({
         setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
             state.isLoggedIn = action.payload.value
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(loginTC.fulfilled, (state, action) => {
+                state.isLoggedIn = action.payload.isLogin
+        })
     }
 })
 
